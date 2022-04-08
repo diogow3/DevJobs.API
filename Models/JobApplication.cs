@@ -1,0 +1,17 @@
+﻿namespace DevJobs.API.Models
+{
+    public class JobApplication
+    {
+        public int Id { get; private set; }
+        public string ApplicantName { get; private set; }
+        public string ApplicantEmail { get; private set; }
+        public int IdJobVacancy { get; private set; }
+
+        public JobApplication(string applicantName, string applicantEmail, int idJobVacancy)
+        {
+            ApplicantName = applicantName;
+            ApplicantEmail = applicantEmail;
+            IdJobVacancy = idJobVacancy;
+        }
+    }
+}
