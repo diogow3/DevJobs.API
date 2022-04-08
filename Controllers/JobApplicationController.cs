@@ -1,4 +1,4 @@
-﻿using DevJobs.API.Data;
+﻿using DevJobs.API.Data.Repositories;
 using DevJobs.API.Dtos;
 using DevJobs.API.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,18 +11,17 @@ namespace DevJobs.API.Controllers
     [ApiController]
     public class JobApplicationController : ControllerBase
     {
-        private readonly DevJobsContext _context;
-        public JobApplicationController(DevJobsContext context)
+        private readonly IJobVacancyRepository _repository;
+        public JobApplicationController(IJobVacancyRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // POST api/job-vacancies/4/applications
         [HttpPost]
         public IActionResult Post(int id, AddJobApplicationDto dto)
         {
-            var jobvacancy = _context.JobVacancies
-                .SingleOrDefault(jv => jv.Id == id);
+            var jobvacancy = _repository.GetById(id);
 
             if (jobvacancy == null)
                 return NotFound();
@@ -32,8 +31,7 @@ namespace DevJobs.API.Controllers
                 dto.ApplicantEmail,
                 id);
 
-            _context.JobApplications.Add(application);
-            _context.SaveChanges();
+            _repository.AddApplication(application);
 
             return NoContent();
         }
