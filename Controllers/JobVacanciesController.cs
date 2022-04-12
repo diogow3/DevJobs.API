@@ -3,6 +3,7 @@ using DevJobs.API.Dtos;
 using DevJobs.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,7 +23,7 @@ namespace DevJobs.API.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var jobvacancies = _repository.GetAll;
+            var jobvacancies = _repository.GetAll();
             return Ok(jobvacancies);
         }
 
@@ -39,15 +40,37 @@ namespace DevJobs.API.Controllers
         }
 
         // POST api/<JobVacanciesController>
+        /// <summary>
+        /// Cadastrar uma vaga de emprego
+        /// </summary>
+        /// <remarks>
+        /// {
+        ///  "title": "string",
+        ///  "description": "string",
+        ///  "company": "string",
+        ///  "isRemote": true,
+        ///  "salaryRange": "string"
+        /// }
+        /// </remarks>
+        /// <param name="dto">Dados da vaga</param>
+        /// <returns>Objeto recém criado</returns>
+        /// <response code="201">Sucesso</response>
+        /// <response code="400">Dados inválidos</response>
         [HttpPost]
         public IActionResult Post(AddJobVacancyDto dto)
         {
+            Log.Information("POST JobVacancy chamado");
             var jobVacancy = new JobVacancy(
                 dto.Title,
                 dto.Description,
                 dto.Company,
                 dto.isRemote,
                 dto.SalaryRange);
+
+            if (jobVacancy.Title.Length > 30)
+            {
+                return BadRequest("Titulo precisa ser menor que 30");
+            }
 
             _repository.Add(jobVacancy);
 
