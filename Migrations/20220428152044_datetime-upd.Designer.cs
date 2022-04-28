@@ -3,6 +3,7 @@ using System;
 using DevJobs.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DevJobs.API.Migrations
 {
     [DbContext(typeof(DevJobsContext))]
-    partial class DevJobsContextModelSnapshot : ModelSnapshot
+    [Migration("20220428152044_datetime-upd")]
+    partial class datetimeupd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

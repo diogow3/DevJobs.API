@@ -8,7 +8,7 @@
         public string Company { get; private set; }
         public bool IsRemote { get; private set; }
         public string SalaryRange { get; private set; }
-        public DateTimeOffset CreatedAt { get; private set; }
+        public DateTime CreatedAt { get; private set; }
         public List<JobApplication> Applications { get; private set; }
 
         public JobVacancy(string title, string description, string company, bool isRemote, string salaryRange)
@@ -19,7 +19,7 @@
             IsRemote = isRemote;
             SalaryRange = salaryRange;
 
-            CreatedAt = DateTimeOffset.UtcNow;
+            CreatedAt = DateTime.UtcNow;
             Applications = new List<JobApplication>();
         }
 
