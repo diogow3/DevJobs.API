@@ -2,8 +2,7 @@
 {
     public record AddJobApplicationDto(
         string ApplicantName,
-        string ApplicantEmail,
-        int IdJobVacancy)
+        string ApplicantEmail)
     {
     }
 }
